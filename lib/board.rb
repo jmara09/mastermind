@@ -3,17 +3,14 @@
 require 'colorize'
 
 class Board
-  COLOR = %w[red blue white black green yellow magenta].freeze
-  TINY_PEG = %w[white black].freeze
-
-  attr_reader :code
-
   def initialize(code)
     @secret_code = code
     @board_guess_accuracy = Array.new(12, Array.new(4, '0'))
     @board_guess_pegs = Array.new(12, Array.new(4, '0'))
     @guess = []
   end
+
+  protected
 
   def guess(code)
     @guess << code
