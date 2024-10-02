@@ -9,15 +9,10 @@ class Board
   attr_reader :code
 
   def initialize(code)
-    @code = code
+    @secret_code = code
     @board_guess_accuracy = Array.new(12, Array.new(4, '0'))
     @board_guess_pegs = Array.new(12, Array.new(4, '0'))
     @guess = []
-    @secret_code = []
-  end
-
-  def secret_code(code)
-    @secret_code = code
   end
 
   def guess(code)
