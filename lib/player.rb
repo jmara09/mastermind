@@ -2,8 +2,6 @@
 
 module Mastermind
   class Player
-    USER = %w[maker breaker].freeze
-
     attr_accessor :colors
 
     def initialize
@@ -34,6 +32,35 @@ module Mastermind
       end
     end
 
+    def check_computer_guess(code, your_code)
+      puts "\nThe computer's guess: " \
+           "#{code[0].colorize(background: code[0].to_sym)}, #{code[1].colorize(background: code[1].to_sym)}, " \
+           "#{code[2].colorize(background: code[2].to_sym)}, #{code[3].colorize(background: code[3].to_sym)}\n\n" \
+           'Your secret codes are: ' \
+           "#{your_code[0].colorize(background: your_code[0].to_sym)}, #{your_code[1].colorize(background: your_code[1].to_sym)}, " \
+           "#{your_code[2].colorize(background: your_code[2].to_sym)}, #{your_code[3].colorize(background: your_code[3].to_sym)}\n\n"
+
+      loop do
+        @color = %w[white red]
+        @pegs = []
+
+        print "Type #{' Red '.colorize(background: :red)} if it's in position. " \
+              "Otherwise, type #{' White '.colorize(background: :white, color: :black)} if it's out of position: "
+
+        @pegs = gets.chomp.downcase.split
+
+        @boolean = @pegs.each do |color|
+          unless @color.include?(color)
+            puts 'Only red or white color please'
+            return false
+          end
+        end
+
+        redo if @boolean == false
+        return @pegs
+      end
+    end
+
     def list_of_colors
       print "\n1. #{' Red '.colorize(background: :red)} " \
             "2. #{' Blue '.colorize(background: :blue)} " \
@@ -42,7 +69,7 @@ module Mastermind
             "5. #{' Green '.colorize(background: :green)} " \
             "6. #{' Yellow '.colorize(background: :yellow)} " \
             "7. #{' Magenta '.colorize(background: :magenta)}\n\n"
-      puts 'Please enter the number of each of your four choices, separated by a space:'
+      print 'Please enter the number of each of your four choices, separated by a space: '
     end
   end
 end
