@@ -2,16 +2,10 @@
 
 module Mastermind
   class Computer
-    attr_accessor :colorize_tiny_pegs, :bool
+    attr_accessor :bool, :ai_code
 
     def initialize
-      @ai_code = Array.new(4, '')
-    end
-
-    def random_code
-      @ai_code = @ai_code.map do |_|
-        Board::COLORS[Random.rand(7)]
-      end
+      @ai_code = Array.new(4) { |_| Board::COLORS[Random.rand(7)] }
     end
 
     def check_guess(code)
@@ -35,9 +29,9 @@ module Mastermind
       @pegs
     end
 
-    def winner?(code)
-      @bool = @ai_code.map.with_index do |color, index|
-        color == code[index]
+    def winner?(secret_code, guess_code)
+      @bool = secret_code.map.with_index do |color, index|
+        color == guess_code[index]
       end
       @bool.all?
     end
